@@ -3,25 +3,25 @@ let counter=-1;
 const movies=[];
 
 
-const renderMovies=(counter)=>{const ul=document.getElementById('movie-list');
-
+const renderMovies=(filter="")=>
+{
+    const moviesList=document.getElementById('movie-list');
     if(movies.length===0)
-    {ul.classList.remove('visible');}
+    {ul.classList.remove('visible');return;}
     else{ul.classList.add('visible')}
-
-        const newCard=document.createElement('li');
-        let  text=movies[counter].info.title + ' ';
-        let count=0;
-        movies.forEach((movie)=>{
-            if(count===counter){
+    ul.innerHTML="";
+    const filterValue=!filter?movies:movies.filter(movie=>movie.info.title.includes(filter));
+        filterValue.forEach((movie)=>{
+            const newCard=document.createElement('li');
+            let text=movie.info.title + '-';
             for (const Key in movie.info) {
                 if(Key!=='title'){
-                    console.log(movie.info);
-                    text+=`${Key} - ${movie.info[Key]}`;}
-            }}count++;
+                    text=text +`${Key} : ${movie.info[Key]}`;}
+            }
+            newCard.textContent=text;
+            moviesList.append(newCard);
     });
-        newCard.textContent=text;
-        ul.append(newCard);
+
 }
 const addMoviesHandler=()=>{
     const title=document.getElementById('title').value;
