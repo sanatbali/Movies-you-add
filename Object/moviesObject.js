@@ -1,11 +1,10 @@
 const addMovies=document.getElementById('add-movie-btn');
-let counter=-1;
 const movies=[];
+const searchButn=document.getElementById('search-btn');
 
-
-const renderMovies=(filter="")=>
+const renderMovies=(filter='')=>
 {
-    const moviesList=document.getElementById('movie-list');
+    const ul=document.getElementById('movie-list');
     if(movies.length===0)
     {ul.classList.remove('visible');return;}
     else{ul.classList.add('visible')}
@@ -19,15 +18,18 @@ const renderMovies=(filter="")=>
                     text=text +`${Key} : ${movie.info[Key]}`;}
             }
             newCard.textContent=text;
-            moviesList.append(newCard);
+            ul.append(newCard);
     });
-
 }
 const addMoviesHandler=()=>{
-    const title=document.getElementById('title').value;
+    let titlei=document.getElementById('title');
+    const extraMoviei=document.getElementById('extra-name');
+    const extraValuei=document.getElementById('extra-value');
 
-    const extraMovie=document.getElementById('extra-name').value;
-    const extraValue=document.getElementById('extra-value').value;
+    let title=titlei.value;
+    let extraMovie=extraMoviei.value;
+    let extraValue=extraValuei.value;
+
     if(title.trim()==='' || extraMovie.trim() ==='' || extraValue=== ''){return;}
 const newMoviesObject={
     info:{
@@ -36,15 +38,21 @@ const newMoviesObject={
     },
     id:Math.random()
 };
-    counter+=1;
 movies.push(newMoviesObject);
-console.log(movies);
-renderMovies(counter);
+
+titlei.value="";
+extraMoviei.value="";
+extraValuei.value="";
+
+renderMovies();
 }
+const searching=()=>
+{
+    const filterValue=document.getElementById('filter-title').value;
+    renderMovies(filterValue);
+}
+searchButn.addEventListener('click',searching);
 addMovies.addEventListener('click',addMoviesHandler);
-
-
-
 
 //IMPORTANT KEYNOTES
 
