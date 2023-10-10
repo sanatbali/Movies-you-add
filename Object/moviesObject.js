@@ -3,7 +3,26 @@ let counter=-1;
 const movies=[];
 
 
+const renderMovies=(counter)=>{const ul=document.getElementById('movie-list');
 
+    if(movies.length===0)
+    {ul.classList.remove('visible');}
+    else{ul.classList.add('visible')}
+
+        const newCard=document.createElement('li');
+        let  text=movies[counter].info.title + ' ';
+        let count=0;
+        movies.forEach((movie)=>{
+            if(count===counter){
+            for (const Key in movie.info) {
+                if(Key!=='title'){
+                    console.log(movie.info);
+                    text+=`${Key} - ${movie.info[Key]}`;}
+            }}count++;
+    });
+        newCard.textContent=text;
+        ul.append(newCard);
+}
 const addMoviesHandler=()=>{
     const title=document.getElementById('title').value;
 
